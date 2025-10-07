@@ -30,8 +30,8 @@ const productSchema = new mongoose.Schema({
   available: Boolean,
   bestSeller: Boolean,
   image: String,
-  description: String,   // ✅ added for details
-  nutrition: String      // ✅ added for nutrition info
+  description: String,   
+  nutrition: String      
 });
 
 const Product = mongoose.model("Product", productSchema);
@@ -39,10 +39,10 @@ const Product = mongoose.model("Product", productSchema);
 // --- Routes ---
 // Default route
 app.get("/", (req, res) => {
-  res.json({ message: "Vegetable & Fruit Shop API is running 🚀" });
+  res.json({ message: "Vegetable & Fruit Shop API is running " });
 });
 
-// 🛒 Get all products with filters, sorting & search
+//  Get all products with filters, sorting & search
 app.get("/api/products", async (req, res) => {
   const { category, available, bestSeller, sort, search } = req.query;
 
@@ -54,13 +54,7 @@ app.get("/api/products", async (req, res) => {
   // 🔍 Search by product name (case insensitive)
   if (search) {
     filter.name = { $regex: search, $options: "i" };
-    // Optionally search description/nutrition:
-    // filter.$or = [
-    //   { name: { $regex: search, $options: "i" } },
-    //   { description: { $regex: search, $options: "i" } },
-    //   { nutrition: { $regex: search, $options: "i" } }
-    // ];
-  }
+    
 
   let query = Product.find(filter);
 
@@ -90,7 +84,7 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-// 🛒 Seed database with sample data
+// Seed database with sample data
 app.post("/api/products/seed", async (req, res) => {
   try {
     await Product.deleteMany({});
@@ -107,7 +101,7 @@ app.post("/api/products/seed", async (req, res) => {
   }
 });
 
-// 🛒 Get single product by id
+// Get single product by id
 app.get("/api/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -120,5 +114,6 @@ app.get("/api/products/:id", async (req, res) => {
 
 // --- Start server ---
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
+ 
